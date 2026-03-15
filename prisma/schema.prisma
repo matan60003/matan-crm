@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  phone     String?
+  company   String?
+  status    String   @default("פעיל")
+  amount    String   @default("₪0")
+  notes     String?  // <--- השורה הזו חייבת להיות כאן!
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String?  // השורה הזו חייבת להיות כאן!
+  source    String
+  status    String   @default("חדש")
+  notes     String?
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id        Int       @id @default(autoincrement())
+  title     String
+  status    String    @default("פתוח")
+  priority  String    @default("רגיל")
+  // שינוי כאן: במקום notes, אנחנו עוברים למערך של הערות
+  comments  Comment[] 
+  leadId    Int?
+  lead      Lead?     @relation(fields: [leadId], references: [id])
+  createdAt DateTime  @default(now())
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
