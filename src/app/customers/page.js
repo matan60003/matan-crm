@@ -10,7 +10,7 @@ export default function CustomersPage() {
   // States לעריכה
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [customerToEdit, setCustomerToEdit] = useState(null);
-
+  // Edit
   const fetchCustomers = async () => {
     try {
       const res = await fetch("/api/customers");
