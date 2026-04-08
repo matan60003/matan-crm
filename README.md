@@ -40,9 +40,11 @@ Icons: Lucide React
    Create a .env file in the root directory and add your connection string (example based on docker-compose.yml):
    DATABASE_URL="postgresql://postgres:123@db:5432/matan_crm?schema=public"
    NEXTAUTH_SECRET="your_random_secret_key"
-   NEXTAUTH_URL="http://localhost:3000" 3. Run the entire system
+   NEXTAUTH_URL="http://localhost:3000"
+ 3. Run the entire system
    Bash
-   docker-compose up --build -d 4. Sync the Database Schema
+   docker-compose up --build -d
+4. Sync the Database Schema
    Since the database starts empty in a new environment, you must push the Prisma schema to create the tables:
    Bash
    docker-compose exec matan-crm-app-1 npx prisma db push
